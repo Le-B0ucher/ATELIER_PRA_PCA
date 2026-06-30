@@ -231,27 +231,27 @@ Faites preuve de pédagogie et soyez clair dans vos explications et procedures d
 **Exercice 1 :**  
 Quels sont les composants dont la perte entraîne une perte de données ?  
   
-*..Répondez à cet exercice ici..*
+Seul le PVC pra-data est critique : c'est lui qui stocke la BDD SQLite. Le pod est stateless, sa suppression n'a aucun impact.
 
 **Exercice 2 :**  
 Expliquez nous pourquoi nous n'avons pas perdu les données lors de la supression du PVC pra-data  
   
-*..Répondez à cet exercice ici..*
+Grâce au CronJob qui sauvegarde la BDD toutes les minutes vers le PVC pra-backup. On a pu restaurer les données depuis ce backup après le crash.
 
 **Exercice 3 :**  
 Quels sont les RTO et RPO de cette solution ?  
   
-*..Répondez à cet exercice ici..*
+RPO ≈ 1 minute (fréquence des sauvegardes). RTO : quelques minutes, le temps de relancer manuellement la procédure de restauration.
 
 **Exercice 4 :**  
 Pourquoi cette solution (cet atelier) ne peux pas être utilisé dans un vrai environnement de production ? Que manque-t-il ?   
   
-*..Répondez à cet exercice ici..*
+Un seul pod (pas de haute dispo), SQLite pas adapté à la charge en prod, restauration manuelle, pas de monitoring, pas de sauvegarde hors cluster.
   
 **Exercice 5 :**  
 Proposez une archtecture plus robuste.   
   
-*..Répondez à cet exercice ici..*
+Une vraie BDD avec réplication (PostgreSQL), plusieurs réplicas de l'app, sauvegardes stockées hors cluster (S3...), monitoring/alerting, et restauration automatisée.
 
 ---------------------------------------------------
 Séquence 6 : Ateliers  
